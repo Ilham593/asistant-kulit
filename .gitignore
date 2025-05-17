@@ -1,0 +1,42 @@
+# Node modules
+node_modules/
+
+# dotenv file
+.env
+
+# logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# system files
+.DS_Store
+Thumbs.db
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+
+# OS
+*.bak
+*.tmp
+
+# Model artifacts (ML)
+model/
+*.h5
+*.pb
+*.onnx
+*.tflite
+
+# Output
+dist/
+build/
+
+# Jest/coverage (jika pakai testing)
+coverage/
+
+# Optional: data uploads / static
+uploads/
