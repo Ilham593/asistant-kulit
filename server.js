@@ -5,6 +5,7 @@ import connectDB from "./config/db.js";
 import authrouter from "./routes/auth.js";
 import predictrouter from "./routes/predict.js";
 import riwayatrouter from "./routes/riwayat.js";
+import artikelrouter from "./routes/artikel.js";
 dotenv.config();
 const app = express();
 
@@ -19,6 +20,7 @@ connectDB();
 app.use("/api/auth", authrouter);
 app.use("/api", predictrouter);
 app.use("/api", riwayatrouter);
+app.use("/api", artikelrouter);
 
 const PORRT = process.env.PORT || 5000;
 
