@@ -39,3 +39,24 @@ export const getRiwayat = async (req, res) => {
     res.status(500).json({ message: "Gagal mengambil riwayat" });
   }
 };
+
+export const getRiwayatById = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const riwayatId = req.params.id;
+
+    const riwayat = await Riwayat.findOne({ _id: riwayatId, userId });
+
+    if (!riwayat) {
+      return res.status(404).json({ message: "Riwayat tidak ditemukan" });
+    }
+
+    res.status(200).json({
+      message: "Riwayat berhasil diambil",
+      data: riwayat,
+    })
+  } catch (error) {
+    console.log("Error getting riwayat:", error);
+    res.status(500).json({ message: "Gagal mengambil riwayat" });
+  }
+};
