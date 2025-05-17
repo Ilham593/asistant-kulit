@@ -2,7 +2,7 @@ export const predictSkinDisease = async (req, res) => {
   try {
     // dummy data
     const hasilPrediksi = {
-      penyakin: 'jerawat batu',
+      penyakit: 'jerawat batu',
       akurasi: 3,
       saran: 'jangan merokok',
     };

@@ -4,6 +4,7 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import authrouter from "./routes/auth.js";
 import predictrouter from "./routes/predict.js";
+import riwayatrouter from "./routes/riwayat.js";
 dotenv.config();
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(cors());
 connectDB();
 app.use("/api/auth", authrouter);
 app.use("/api", predictrouter);
+app.use("/api", riwayatrouter);
 
 const PORRT = process.env.PORT || 5000;
 
