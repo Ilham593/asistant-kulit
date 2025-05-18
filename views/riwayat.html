@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Riwayat Deteksi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f8f9fa;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h2 {
+      margin-bottom: 1.5rem;
+    }
+
+    .card {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      margin-bottom: 1rem;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .card img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      margin: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .error {
+      color: red;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Riwayat Deteksi</h2>
+  <div id="riwayatList">Memuat...</div>
+
+  <script>
+    const container = document.getElementById("riwayatList");
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      container.innerHTML = "<p class='error'>Harap login terlebih dahulu.</p>";
+    } else {
+      fetch("http://localhost:5000/api/riwayat", {
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!Array.isArray(data.riwayat)) {
+          container.innerHTML = "<p class='error'>Data riwayat tidak ditemukan.</p>";
+          return;
+        }
+
+        if (data.riwayat.length === 0) {
+          container.innerHTML = "<p>Belum ada riwayat deteksi.</p>";
+          return;
+        }
+
+        container.innerHTML = "";
+        data.riwayat.forEach((item) => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+            <img src="${item.image}" alt="Hasil gambar"/>
+            <p><strong>Penyakit:</strong> ${item.penyakit}</p>
+            <p><strong>Akurasi:</strong> ${(item.akurasi * 100).toFixed(2)}%</p>
+            <p><strong>Tanggal:</strong> ${new Date(item.tanggal).toLocaleString()}</p>
+            <p><strong>Saran:</strong> ${item.saran}</p>
+          `;
+          container.appendChild(card);
+        });
+      })
+      .catch((err) => {
+        container.innerHTML = "<p class='error'>Gagal memuat data riwayat.</p>";
+        console.error(err);
+      });
+    }
+  </script>
+
+</body>
+</html>

@@ -5,7 +5,8 @@ import jwt from "jsonwebtoken";
 // register user
 export const register = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const username = req.body.username?.trim();
+    const password = req.body.password?.trim();
 
     if (!username || !password) {
       return res.status(400).json({ msg: "Please enter all fields" });
@@ -15,6 +16,12 @@ export const register = async (req, res) => {
 
     if (existingUser) {
       return res.status(400).json({ msg: "User already exists" });
+    }
+
+    if (username.length < 3) {
+      return res
+        .status(400)
+        .json({ msg: "Username must be at least 3 characters long" });
     }
 
     if (password.length < 6) {
@@ -64,7 +71,7 @@ export const login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      return res.status(400).json({ msg: "Invalid credentials" });
+      return res.status(401).json({ msg: "Invalid credentials" });
     }
 
     const token = jwt.sign(
@@ -97,6 +104,6 @@ export const getProfile = async (req, res) => {
     });
   } catch (error) {
     console.log("Error getting profile:", error);
-    res.status(500).json({ message: "Gagal mengambil data profile" });
+    res.status(500).json({ msg: "Gagal mengambil data profile" });
   }
 };

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saran Penanganan</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f8f9fa;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .card {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .card h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .row > div {
+      flex: 1;
+    }
+
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    .link {
+      color: #28a745;
+      text-decoration: none;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+
+    p {
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="content">
+      <h2>Saran Penanganan</h2>
+      <p>Untuk <strong id="penyakit">...</strong></p>
+
+      <div class="row">
+        <div>
+          <strong>Langkah Awal Penanganan</strong>
+          <p id="langkah"></p>
+        </div>
+        <div>
+          <strong>Obat Umum</strong>
+          <p id="obat"></p>
+        </div>
+      </div>
+
+      <hr />
+
+      <p><strong>Kapan Harus ke Dokter</strong></p>
+      <p id="kapanDokter"></p>
+
+      <div class="bottom">
+        <button class="btn" onclick="window.location.href='prediksi.html'">Kembali ke Dashboard</button>
+        <a class="link" href="#">Baca artikel edukasi</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const data = JSON.parse(localStorage.getItem("hasilDeteksi"));
+
+    if (!data) {
+      document.body.innerHTML = "<p>Data tidak ditemukan. Silakan ulangi deteksi.</p>";
+    } else {
+      document.getElementById("penyakit").innerText = data.penyakit;
+      document.getElementById("langkah").innerText =
+        data.langkah || "Cuci muka 2x sehari dengan sabun ringan.";
+      document.getElementById("obat").innerText =
+        data.obat || "Gunakan salep yang mengandung benzoyl peroxide.";
+      document.getElementById("kapanDokter").innerText =
+        data.kapanDokter ||
+        "Jika jerawat semakin parah atau tidak membaik dengan perawatan mandiri.";
+    }
+  </script>
+
+</body>
+</html>

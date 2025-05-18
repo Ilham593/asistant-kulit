@@ -5,14 +5,15 @@ import connectDB from "./config/db.js";
 import authrouter from "./routes/auth.js";
 import predictrouter from "./routes/predict.js";
 import riwayatrouter from "./routes/riwayat.js";
-import artikelrouter from "./routes/artikel.js";
+// import artikelrouter from "./routes/artikel.js";
+// import statistikrouter from "./routes/statistik.js";
 dotenv.config();
 const app = express();
 
 
 // middleware
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 
 
 // connet
@@ -20,7 +21,8 @@ connectDB();
 app.use("/api/auth", authrouter);
 app.use("/api", predictrouter);
 app.use("/api", riwayatrouter);
-app.use("/api", artikelrouter);
+// app.use("/api", artikelrouter);
+// app.use("/api", statistikrouter);
 
 const PORRT = process.env.PORT || 5000;
 
