@@ -31,6 +31,11 @@ app.use("/api", riwayatrouter);
 // Swagger setup 
 swaggerDocs(app);
 
+// Redirect
+app.get("/", (req, res) => {
+  res.redirect("/api-docs");
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);
