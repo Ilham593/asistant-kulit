@@ -10,8 +10,12 @@ const swaggerDefinition = {
   },
   servers: [
     {
+      url: "asistant-kulit-production.up.railway.app",
+      description: "Production server (Railway)",
+    },
+    {
       url: "http://localhost:5000",
-      description: "Local dev server",
+      description: "Local",
     },
   ],
   components: {
