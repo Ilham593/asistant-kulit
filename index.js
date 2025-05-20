@@ -34,6 +34,7 @@ swaggerDocs(app);
 // Redirect
 app.get("/", (req, res) => {
   res.redirect("/api-docs");
+  console.log("Redirected to /api-docs");
 });
 
 const PORT = process.env.PORT || 5000;
