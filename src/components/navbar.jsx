@@ -36,7 +36,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {open && <Sidebar onClose={()=>setOpen(false)} />}
+      {open && <Sidebar onClose={()=>setOpen(false)} navLinks={navLinks} />}
     </header>
   );
 }
