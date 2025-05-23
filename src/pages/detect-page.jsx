@@ -28,7 +28,7 @@ export default function DetectPage() {
         <FiCamera size={28} /> Deteksi Penyakit Kulit
       </h1>
 
-      <section className="container mx-auto p-4 md:p-8 border rounded-lg">
+      <section className="container mx-auto max-w-7xl p-4 md:p-8 border rounded-lg">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1 h-[500px] border-2 border-accent border-dashed rounded-lg p-2 overflow-hidden">
             {error && (

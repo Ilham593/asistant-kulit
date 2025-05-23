@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import Navbar from './components/navbar';
 import HomePage from './pages/home-page';
 import DetectPage from './pages/detect-page';
+import EduListPage from './pages/edu-list-page';
+import EduDetailPage from './pages/edu-detail-page';
 
 function Layout() {
   return (
@@ -30,6 +32,8 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="deteksi" element={<DetectPage />} />
+          <Route path="/edukasi" element={<EduListPage />} />
+          <Route path="/edukasi/:id" element={<EduDetailPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

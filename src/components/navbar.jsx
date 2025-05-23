@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const navLinks = [
     { label: 'Beranda', to: '/' },
     { label: 'Deteksi', to: '/deteksi' },
-    { label: 'Edukasi', to: '#' },
+    { label: 'Edukasi', to: '/edukasi' },
     { label: 'Asisten AI', to: '#' },
     { label: 'Login', to: '#' },
   ];
@@ -15,7 +15,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   return (
     <header className="bg-white shadow-sm sticky top-0 z-20">
-      <div className="container mx-auto flex items-center justify-between p-4">
+      <div className="container mx-auto flex items-center justify-between p-4 lg:px-16">
         <Link to="/" className="text-2xl font-bold flex items-center gap-1" tabIndex={0}>
             <span className="text-black">assistant</span>
             <span className="text-accent">Skin</span>
