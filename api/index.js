@@ -31,8 +31,6 @@ import cors from 'cors';
 
 app.use(cors({ origin: "*" }));
 
-app.use(cors({ origin: "https://asistant-kulit-mfiguv78g-hams-projects-53365496.vercel.app" }));
-
 app.use(express.json());
 
 // routes utama
