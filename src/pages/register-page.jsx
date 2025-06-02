@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-const LoginPage = () => {
+const RegisterPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#fefaf6] px-4">
       <div className="bg-white rounded-xl shadow-lg w-full max-w-4xl flex flex-col md:flex-row overflow-hidden">
@@ -11,21 +11,37 @@ const LoginPage = () => {
               assistantSkin
             </span>
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Log in</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">Sign Up</h2>
           <p className="text-gray-600">
-            Enter your credentials to access your account.
+            Create your account to start using assistantSkin.
           </p>
         </div>
 
         <div className="md:w-1/2 bg-white p-8 flex items-center justify-center">
           <form className="w-full max-w-sm">
             <h3 className="text-2xl font-semibold text-gray-800 mb-6">
-              Log in
+              Sign Up
             </h3>
+
             <div className="mb-4">
               <label
+                htmlFor="fullname"
                 className="block text-sm text-gray-600 mb-1"
+              >
+                Full Name
+              </label>
+              <input
+                id="fullname"
+                type="text"
+                className="w-full px-4 py-2 border border-amber-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400"
+                placeholder="Your name"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label
                 htmlFor="username"
+                className="block text-sm text-gray-600 mb-1"
               >
                 Username
               </label>
@@ -37,10 +53,10 @@ const LoginPage = () => {
               />
             </div>
 
-            <div className="mb-6">
+            <div className="mb-4">
               <label
-                className="block text-sm text-gray-600 mb-1"
                 htmlFor="password"
+                className="block text-sm text-gray-600 mb-1"
               >
                 Password
               </label>
@@ -51,19 +67,21 @@ const LoginPage = () => {
                 placeholder="••••••••"
               />
             </div>
+
             <button
               type="submit"
               className="w-full bg-amber-400 text-white py-2 rounded-md hover:bg-amber-500 transition"
             >
-              Log in
+              Sign Up
             </button>
+
             <p className="text-sm text-gray-600 mt-4 text-center">
-              Don&apos;t have an account?{" "}
+              Already have an account?{" "}
               <Link
-                to="/register"
+                to="/login"
                 className="text-black font-medium hover:underline"
               >
-                Register
+                Log in
               </Link>
             </p>
           </form>
@@ -73,4 +91,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
