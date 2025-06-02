@@ -6,6 +6,7 @@ import EduDetailPage from "../pages/edu-detail-page";
 import Home from "../pages/home";
 import LoginPage from "../pages/login-page";
 import RegisterPage from "../pages/register-page";
+import LogoutPage from "../pages/logout-page";
 import { createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <RegisterPage />,
+  },
+  {
+    path: "/logout",
+    element: <LogoutPage />,
   },
   {
     path: "/",
