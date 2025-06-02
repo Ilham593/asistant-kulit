@@ -40,3 +40,4 @@ coverage/
 
 # Optional: data uploads / static
 uploads/
+.vercel
