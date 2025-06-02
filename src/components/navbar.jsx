@@ -8,7 +8,7 @@ const navLinks = [
     { label: 'Deteksi', to: '/deteksi' },
     { label: 'Edukasi', to: '/edukasi' },
     { label: 'Asisten AI', to: '#' },
-    { label: 'Login', to: '#' },
+    { label: 'Logout', to: '#' },
   ];
 
 export default function Navbar() {
