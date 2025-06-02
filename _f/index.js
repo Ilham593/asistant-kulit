@@ -1,13 +1,13 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import connectDB from "./config/db.js";
-import swaggerDocs from "./swagger.js";
+import connectDB from "../config/db.js";
+import swaggerDocs from "../swagger.js";
 
 // import router
-import authrouter from "./routes/auth.js";
-import predictrouter from "./routes/predict.js";
-import riwayatrouter from "./routes/riwayat.js";
+import authrouter from "../routes/auth.js";
+import predictrouter from "../routes/predict.js";
+import riwayatrouter from "../routes/riwayat.js";
 // import artikelrouter from "./routes/artikel.js";
 // import statistikrouter from "./routes/statistik.js";
 
