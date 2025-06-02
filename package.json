@@ -2,11 +2,10 @@
   "name": "asistant-kulit",
   "version": "1.0.0",
   "description": "",
-  "main": "api/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node api/index.js",
-    "dev": "vercel dev"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
