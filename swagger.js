@@ -10,12 +10,12 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: "https://asistant-kulit-production.up.railway.app",
-      description: "Production server (Railway)",
+      url: "https://asistant-kulit-k34wlco7n-hams-projects-53365496.vercel.app",
+      description: "Production server (Vercel)",
     },
     {
       url: "http://localhost:5000",
-      description: "Local",
+      description: "Local server",
     },
   ],
   components: {
@@ -46,13 +46,11 @@ export default (app) => {
     "/api-docs",
     swaggerUi.serve,
     swaggerUi.setup(swaggerSpec, {
-      customCssUrl:
-        "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.18.3/swagger-ui.min.css",
+      customCssUrl: "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.18.3/swagger-ui.min.css",
       customJs: [
         "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.18.3/swagger-ui-bundle.min.js",
-        "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.18.3/swagger-ui-standalone-preset.min.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.18.3/swagger-ui-standalone-preset.min.js"
       ],
     })
   );
 };
-
