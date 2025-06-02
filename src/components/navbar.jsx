@@ -4,7 +4,7 @@ import { FiMenu } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 const navLinks = [
-    { label: 'Beranda', to: '/' },
+    { label: 'Beranda', to: '/beranda' },
     { label: 'Deteksi', to: '/deteksi' },
     { label: 'Edukasi', to: '/edukasi' },
     { label: 'Asisten AI', to: '#' },

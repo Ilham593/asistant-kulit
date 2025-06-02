@@ -8,6 +8,7 @@ import LoginPage from "../pages/login-page";
 import RegisterPage from "../pages/register-page";
 import LogoutPage from "../pages/logout-page";
 import { createBrowserRouter } from "react-router-dom";
+import FeedbackPage from "../pages/feedback-page";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
       { path: "deteksi", element: <DetectPage /> },
       { path: "edukasi", element: <EduListPage /> },
       { path: "edukasi/:id", element: <EduDetailPage /> },
+      {path: "feedback", element: <FeedbackPage />},
     ],
   },
 ]);
