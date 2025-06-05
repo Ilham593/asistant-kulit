@@ -7,7 +7,7 @@ const navLinks = [
     { label: 'Beranda', to: '/beranda' },
     { label: 'Deteksi', to: '/deteksi' },
     { label: 'Edukasi', to: '/edukasi' },
-    { label: 'Asisten AI', to: '#' },
+    { label: 'Feedback', to: '/feedback' },
     { label: 'Logout', to: '#' },
   ];
 
