@@ -1,7 +1,9 @@
 import express from "express";
 import { verifyToken } from "../middlewares/authMiddleware.js";
 import { predictSkinDisease } from "../controllers/predictController.js";
+import multer from "multer";
 
+const upload = multer({ storage: multer.memoryStorage() });
 const router = express.Router();
 
 /**
@@ -57,6 +59,7 @@ const router = express.Router();
  *       500:
  *         description: Gagal memproses gambar
  */
-router.post("/predict", verifyToken, predictSkinDisease);
+router.post("/predict", verifyToken, upload.single("image"), predictSkinDisease);
+
 
 export default router;
