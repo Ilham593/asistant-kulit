@@ -28,8 +28,8 @@ export default function HomePage() {
 
   return (
     <>
-      <section className="container mx-auto p-4 md:p-8 grid gap-4
-        grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+    <div className="mx-auto max-w-screen-xl space-y-8">
+      <section className="grid px-4 md:px-8 my-10 gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 justify-center">
         {cards.map(({ title, subtitle, icon, color, path }) => {
           const IconComp = iconMap[icon];
           const bg = color==='white'? 'bg-white' : `bg-${color}`;
@@ -49,12 +49,14 @@ export default function HomePage() {
         })}
       </section>
 
-      <section className="container mx-auto mt-8 p-4 md:p-8">
+      <section className="mt-8 p-4 md:p-8">
         <h2 className="text-2xl font-bold mb-4">
           Peta Lokasi Apotek & RS Terdekat
         </h2>
         <div ref={mapRef} className="w-full h-96 bg-gray-200 rounded overflow-hidden"></div>
       </section>
+    </div>
+      
     </>
   );
 }

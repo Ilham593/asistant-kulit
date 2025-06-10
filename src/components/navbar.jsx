@@ -1,18 +1,24 @@
 import { useState } from 'react';
 import Sidebar from './sidebar';
 import { FiMenu } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const navLinks = [
     { label: 'Beranda', to: '/beranda' },
     { label: 'Deteksi', to: '/deteksi' },
-    { label: 'Edukasi', to: '/edukasi' },
+    { label: 'Artikel', to: '/edukasi' },
     { label: 'Feedback', to: '/feedback' },
     { label: 'Logout', to: '#' },
   ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+
+  const filteredLinks = location.pathname === '/beranda'
+    ? navLinks.filter(link => link.label === 'Logout')
+    : navLinks;
+
   return (
     <header className="bg-white shadow-sm sticky top-0 z-20">
       <div className="container mx-auto flex items-center justify-between p-4 lg:px-16">
@@ -22,7 +28,7 @@ export default function Navbar() {
         </Link>
 
         <nav className="hidden lg:flex space-x-6">
-          {navLinks.map(({ label, to }) => (
+          {filteredLinks.map(({ label, to }) => (
             <Link key={label} to={to} className="hover:text-accent">{label}</Link>
           ))}
         </nav>
