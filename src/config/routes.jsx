@@ -3,20 +3,21 @@ import HomePage from "../pages/home-page";
 import DetectPage from "../pages/detect-page";
 import EduListPage from "../pages/edu-list-page";
 import EduDetailPage from "../pages/edu-detail-page";
-import Home from "../pages/home";
 import LoginPage from "../pages/login-page";
 import RegisterPage from "../pages/register-page";
 import LogoutPage from "../pages/logout-page";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import FeedbackPage from "../pages/feedback-page";
+import { useSelector } from "react-redux";
+
+const ProtectedRoute = ({ children }) => {
+  const { token } = useSelector((state) => state.auth);
+  return token ? children : <Navigate to="/" replace />;
+};
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/login",
     element: <LoginPage />,
   },
   {
@@ -29,13 +30,17 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
     children: [
       { path: "beranda", element: <HomePage /> },
       { path: "deteksi", element: <DetectPage /> },
       { path: "edukasi", element: <EduListPage /> },
       { path: "edukasi/:id", element: <EduDetailPage /> },
-      {path: "feedback", element: <FeedbackPage />},
+      { path: "feedback", element: <FeedbackPage /> },
     ],
   },
 ]);
