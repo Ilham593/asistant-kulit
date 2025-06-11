@@ -7,6 +7,8 @@ export function CameraHandler(onCapture) {
 
   const [streamActive, setStreamActive] = useState(false);
   const [error, setError] = useState('');
+  const [devices, setDevices] = useState([]);
+  const [selectedDevice, setSelectedDevice] = useState(null);
 
   const stopCamera = () => {
     if (mediaStream.current) {
@@ -14,11 +16,15 @@ export function CameraHandler(onCapture) {
       mediaStream.current = null;
     }
     setStreamActive(false);
+    setSelectedDevice(null);
   };
 
   const openCamera = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const constraints = selectedDevice
+        ? { video: { deviceId: { exact: selectedDevice } } }
+        : { video: true };
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
       mediaStream.current = stream;
       videoRef.current.srcObject = stream;
       await videoRef.current.play();
@@ -29,6 +35,18 @@ export function CameraHandler(onCapture) {
       stopCamera();
     }
   };
+
+  useEffect(() => {
+    navigator.mediaDevices.enumerateDevices().then((list) => {
+      const videoDevices = list.filter(d => d.kind === 'videoinput');
+      setDevices(videoDevices);
+      if (videoDevices.length > 0) {
+        setSelectedDevice(videoDevices[0].deviceId);
+      } else {
+        setError('Tidak ada kamera yang tersedia');
+      }
+    });
+  }, []);
 
   const toggleCamera = () => {
     streamActive ? stopCamera() : openCamera();
@@ -60,5 +78,5 @@ export function CameraHandler(onCapture) {
     };
   }, []);
 
-  return { videoRef, canvasRef, streamActive, error, toggleCamera, capturePhoto };
+  return { videoRef, canvasRef, streamActive, error, toggleCamera, capturePhoto, devices, selectedDevice, setSelectedDevice  };
 }
