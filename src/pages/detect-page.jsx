@@ -24,6 +24,7 @@ export default function DetectPage() {
 
   return (
     <>
+    <div className="min-h-screen bg-[#fefaf6] py-8 px-4">
       <h1 className="p-4 md:p-8 text-2xl font-semibold flex items-center justify-center gap-2">
         <FiCamera size={28} /> Deteksi Penyakit Kulit
       </h1>
@@ -112,8 +113,8 @@ export default function DetectPage() {
             Hasil Deteksi Penyakit Kulit
           </h2>
           {/* Disclaimer */}
-          <div className="mb-6 p-4 bg-yellow-50 border-l-4 border-yellow-400 text-gray-800 rounded-lg">
-            <strong>Disclaimer:</strong> Hasil deteksi ini hanya sebagai referensi awal. assistantSkin membantu Anda memahami kondisi kulit Anda, bukan pengganti Dokter. Untuk diagnosis dan penanganan yang tepat, konsultasikan dengan dokter spesialis kulit.
+          <div className="mb-6 p-4 bg-yellow-50 border-l-4 border-yellow-400 text-gray-950 rounded-lg italic">
+            <strong>Disclaimer:</strong> Hasil deteksi ini hanya sebagai referensi awal. assistantSkin membantu memahami kondisi kulit Anda dan bukan pengganti Dokter. Untuk diagnosis dan penanganan yang tepat, konsultasikan dengan dokter spesialis kulit.
           </div>
           {/* Data dari Model ML */}
           <div className="p-4 border rounded-lg">
@@ -128,6 +129,7 @@ export default function DetectPage() {
           </div>
         </section>
       )}
+    </div>
     </>
   );
 }

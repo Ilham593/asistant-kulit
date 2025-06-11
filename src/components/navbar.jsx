@@ -6,6 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 const navLinks = [
     { label: 'Beranda', to: '/beranda' },
     { label: 'Deteksi', to: '/deteksi' },
+    { label: 'Riwayat', to: '/riwayat' },
     { label: 'Artikel', to: '/edukasi' },
     { label: 'Feedback', to: '/feedback' },
     { label: 'Logout', to: '#' },

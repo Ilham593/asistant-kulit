@@ -9,6 +9,8 @@ import LogoutPage from "../pages/logout-page";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import FeedbackPage from "../pages/feedback-page";
 import { useSelector } from "react-redux";
+import HistoryPage from "../pages/history-page";
+import HistoryDetailPage from "../pages/history-detail-page";
 
 const ProtectedRoute = ({ children }) => {
   const { token } = useSelector((state) => state.auth);
@@ -37,6 +39,8 @@ const router = createBrowserRouter([
     ),
     children: [
       { path: "beranda", element: <HomePage /> },
+      { path: "riwayat", element: <HistoryPage /> },
+      { path: "riwayat/:id", element: <HistoryDetailPage /> },
       { path: "deteksi", element: <DetectPage /> },
       { path: "edukasi", element: <EduListPage /> },
       { path: "edukasi/:id", element: <EduDetailPage /> },
