@@ -33,18 +33,17 @@ export default function HomePage() {
         <section className="grid px-4 md:px-8 my-10 gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 justify-center">
           {cards.map(({ title, subtitle, icon, color, path }) => {
             const IconComp = iconMap[icon];
-            const bg = color==='white'? 'bg-white' : `bg-${color}`;
+            const bg = color === 'white' ? 'bg-white' : `bg-${color}`;
             return (
               <Link to={path || '#'} key={title} tabIndex={-1}>
-                  <article
-                  key={title}
+                <article
                   className={`${bg} rounded-lg p-6 shadow hover:shadow-md transition`}
                   role="button"
-                  >
-                  <IconComp size={32} className="mb-4 text-gray-700"/>
+                >
+                  <IconComp size={32} className="mb-4 text-gray-700" />
                   <h2 className="text-lg font-semibold">{title}</h2>
                   <p className="text-sm text-gray-600">{subtitle}</p>
-                  </article>
+                </article>
               </Link>
             );
           })}
