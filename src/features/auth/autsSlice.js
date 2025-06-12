@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// ganti baseURL sesuai backend kamu
-const API_URL = '';
+const API_URL = 'https://asistant-kulit-production-7ab2.up.railway.app/api/auth';
 
 export const register = createAsyncThunk('auth/register', async (data, thunkAPI) => {
   try {
@@ -52,7 +51,6 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-
       .addCase(login.pending, (state) => { state.loading = true; state.error = null; })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;

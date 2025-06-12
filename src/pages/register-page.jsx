@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { register } from "../features/auth/autsSlice";
+
 const RegisterPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user, loading, error } = useSelector((state) => state.auth);
 
   const [formData, setFormData] = useState({
-    fullname: "",
     username: "",
     password: "",
   });
@@ -59,20 +59,6 @@ const RegisterPage = () => {
             <h3 className="text-2xl font-semibold text-gray-800 mb-6">
               Sign Up
             </h3>
-
-            <div className="mb-4">
-              <label htmlFor="fullname" className="block text-sm text-gray-600 mb-1">
-                Full Name
-              </label>
-              <input
-                id="fullname"
-                type="text"
-                value={formData.fullname}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-amber-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400"
-                placeholder="Your name"
-              />
-            </div>
 
             <div className="mb-4">
               <label htmlFor="username" className="block text-sm text-gray-600 mb-1">

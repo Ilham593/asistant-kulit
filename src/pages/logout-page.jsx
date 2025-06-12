@@ -1,12 +1,22 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../features/auth/autsSlice";
 const LogoutPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(logout());
+
+    navigate("/login");
+  }, [dispatch, navigate]);
+
   return (
     <div className="min-h-screen bg-[#fdfaf6] flex items-center justify-center px-4">
       <div className="bg-[#f4eafc] rounded-3xl p-8 max-w-md w-full text-center shadow-md">
         <img
-          src=""
+          src={null}
           alt="ops"
           className="w-40 h-auto mx-auto mb-6"
         />

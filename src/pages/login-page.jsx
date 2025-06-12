@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { login } from "../features/auth/autsSlice";
+
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -23,13 +24,13 @@ const LoginPage = () => {
     e.preventDefault();
     const res = await dispatch(login(formData));
     if (res.meta.requestStatus === "fulfilled") {
-      navigate("/beranda"); 
+      navigate("/beranda");
     }
   };
 
   useEffect(() => {
     if (user) {
-      navigate("/");
+      navigate("/beranda");
     }
   }, [user, navigate]);
 
@@ -39,14 +40,10 @@ const LoginPage = () => {
         <div className="md:w-1/2 p-8 flex flex-col justify-center bg-white">
           <div className="flex items-center gap-2 mb-6">
             <div className="w-6 h-6 bg-amber-500 rounded-full"></div>
-            <span className="text-lg font-bold text-gray-900">
-              assistantSkin
-            </span>
+            <span className="text-lg font-bold text-gray-900">assistantSkin</span>
           </div>
           <h2 className="text-3xl font-bold text-gray-900 mb-2">Log in</h2>
-          <p className="text-gray-600">
-            Enter your credentials to access your account.
-          </p>
+          <p className="text-gray-600">Enter your credentials to access your account.</p>
         </div>
 
         <div className="md:w-1/2 bg-white p-8 flex items-center justify-center">
@@ -54,9 +51,7 @@ const LoginPage = () => {
             <h3 className="text-2xl font-semibold text-gray-800 mb-6">Log in</h3>
 
             <div className="mb-4">
-              <label htmlFor="username" className="block text-sm text-gray-600 mb-1">
-                Username
-              </label>
+              <label htmlFor="username" className="block text-sm text-gray-600 mb-1">Username</label>
               <input
                 id="username"
                 type="text"
@@ -68,9 +63,7 @@ const LoginPage = () => {
             </div>
 
             <div className="mb-6">
-              <label htmlFor="password" className="block text-sm text-gray-600 mb-1">
-                Password
-              </label>
+              <label htmlFor="password" className="block text-sm text-gray-600 mb-1">Password</label>
               <input
                 id="password"
                 type="password"
@@ -93,9 +86,7 @@ const LoginPage = () => {
 
             <p className="text-sm text-gray-600 mt-4 text-center">
               Don't have an account?{" "}
-              <Link to="/register" className="text-black font-medium hover:underline">
-                Register
-              </Link>
+              <Link to="/register" className="text-black font-medium hover:underline">Register</Link>
             </p>
           </form>
         </div>
