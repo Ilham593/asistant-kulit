@@ -18,8 +18,12 @@ export default function DetectPage() {
 
   const handleDetect = async () => {
     if (!preview) return;
-    const res = await presenter.detect(preview);
-    setResult(res);
+    const img = new Image();
+    img.src = preview;
+    img.onload = async () => {
+      const res = await presenter.detect(img);
+      setResult(res);
+    };
   };
 
   return (
@@ -106,26 +110,45 @@ export default function DetectPage() {
       </div>
 
       {result && (
-        <section className="my-6 container mx-auto max-w-3xl p-6 bg-white rounded-lg shadow"
+        <section className="my-6 container mx-auto max-w-3xl p-6 bg-white rounded-lg shadow space-y-6"
           aria-labelledby="result-heading">
             
-          <h2 id="result-heading" className="text-xl font-semibold mb-4">
+          <h2 className="text-xl font-semibold mb-4">
             Hasil Deteksi Penyakit Kulit
           </h2>
+
           {/* Disclaimer */}
           <div className="mb-6 p-4 bg-yellow-50 border-l-4 border-yellow-400 text-gray-950 rounded-lg italic">
             <strong>Disclaimer:</strong> Hasil deteksi ini hanya sebagai referensi awal. assistantSkin membantu memahami kondisi kulit Anda dan bukan pengganti Dokter. Untuk diagnosis dan penanganan yang tepat, konsultasikan dengan dokter spesialis kulit.
           </div>
+
           {/* Data dari Model ML */}
-          <div className="p-4 border rounded-lg">
-            <h3 className="font-semibold mb-2">Prediksi Penyakit</h3>
-            <p className="text-xl text-red-600">{result.disease}</p>
-            <h3 className="font-semibold mb-2 mt-5">Rekomendasi Penanganan</h3>
-            <p className="text-gray-700">
-              Gunakan krim dengan bahan X secara rutin, hindari
-              paparan sinar matahari langsung, dan jaga kebersihan area kulit yang
-              terkena. Untuk perawatan lebih lanjut, konsultasikan ke dokter spesialis.
-            </p>
+          <div>
+            <div className="p-4 border rounded-lg">
+              <h3 className="font-semibold mb-2">Prediksi Penyakit</h3>
+              <p className="text-xl text-red-600">
+                {result.disease} ({(result.confidence*100).toFixed(2)}%)
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold mb-2">Rekomendasi Produk</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {result.recommendations.map((item) => (
+                  <div key={item.id} className="flex border rounded-lg overflow-hidden">
+                    <img src={item.id} alt={item.name} className="w-24 h-24 object-cover" />
+                    <div className="p-2 flex-1">
+                      <p className="font-medium">{item.brand}</p>
+                      <p className="text-gray-700 text-sm">{item.name}</p>
+                      <p className="text-green-600 text-sm">{item.price}</p>
+                      <a href={item.link} target="_blank" rel="noopener" className="text-accent text-sm hover:underline">
+                        Lihat Produk →
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
       )}
