@@ -13,6 +13,7 @@ export default function DetectPage() {
   const handleFile = (e) => {
     const file = e.target.files[0];
     if (!file) return;
+    if (streamActive) toggleCamera(false);
     setPreview(URL.createObjectURL(file));
   };
 
@@ -35,7 +36,10 @@ export default function DetectPage() {
 
       <section className="container mx-auto max-w-3xl p-4 md:p-8 border rounded-lg space-y-4">
         <div className="text-gray-700 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
-          Pastikan foto kulit yang diunggah terang dan jelas untuk hasil deteksi yang akurat.
+          <ul className="pl-2 space-y-3">
+            <li>Deteksi hanya bisa dilakukan di area wajah</li>
+            <li>Pastikan foto yang diupload terang dan jelas untuk hasil deteksi yang akurat.</li>
+          </ul>
         </div>
 
         <div className="relative h-[500px] border-2 border-accent border-dashed rounded-lg p-2 overflow-hidden flex items-center justify-center">
@@ -131,12 +135,12 @@ export default function DetectPage() {
               </p>
             </div>
 
-            <div>
-              <h3 className="font-semibold mb-2">Rekomendasi Produk</h3>
+            <div className="mt-4 p-4 border rounded-lg">
+              <h3 className="font-semibold mb-5">Rekomendasi Produk</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {result.recommendations.map((item) => (
-                  <div key={item.id} className="flex border rounded-lg overflow-hidden">
-                    <img src={item.id} alt={item.name} className="w-24 h-24 object-cover" />
+                  <div key={item.id} className="flex border rounded-lg overflow-hidden space-y-4">
+                    <img src={item.image} alt={item.name} className="w-24 h-24 object-cover" />
                     <div className="p-2 flex-1">
                       <p className="font-medium">{item.brand}</p>
                       <p className="text-gray-700 text-sm">{item.name}</p>

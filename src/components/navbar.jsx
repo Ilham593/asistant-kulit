@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Sidebar from './sidebar';
 import { FiMenu } from 'react-icons/fi';
 import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const navLinks = [
     { label: 'Beranda', to: '/beranda' },
@@ -9,16 +10,15 @@ const navLinks = [
     { label: 'Riwayat', to: '/riwayat' },
     { label: 'Artikel', to: '/edukasi' },
     { label: 'Feedback', to: '/feedback' },
-    { label: 'Logout', to: '#' },
   ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const { token } = useSelector((state) => state.auth);
 
-  const filteredLinks = location.pathname === '/beranda'
-    ? navLinks.filter(link => link.label === 'Logout')
-    : navLinks;
+  const mainLabel = token ? 'Logout' : 'Login';
+  const mainTo = token ? '/logout' : '/login';
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-20">
@@ -29,9 +29,18 @@ export default function Navbar() {
         </Link>
 
         <nav className="hidden lg:flex space-x-6">
-          {filteredLinks.map(({ label, to }) => (
-            <Link key={label} to={to} className="hover:text-accent">{label}</Link>
-          ))}
+          {location.pathname !== '/beranda' &&
+            navLinks
+              .filter(link => link.label !== 'Logout')
+              .map(link => (
+                <Link key={link.to} to={link.to} className="hover:text-accent">
+                  {link.label}
+                </Link>
+              ))
+          }
+          <Link to={mainTo} className="hover:text-accent">
+            {mainLabel}
+          </Link>
         </nav>
 
         <button

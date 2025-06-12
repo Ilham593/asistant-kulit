@@ -8,18 +8,12 @@ import RegisterPage from "../pages/register-page";
 import LogoutPage from "../pages/logout-page";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import FeedbackPage from "../pages/feedback-page";
-import { useSelector } from "react-redux";
 import HistoryPage from "../pages/history-page";
 import HistoryDetailPage from "../pages/history-detail-page";
 
-const ProtectedRoute = ({ children }) => {
-  const { token } = useSelector((state) => state.auth);
-  return token ? children : <Navigate to="/" replace />;
-};
-
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/login",
     element: <LoginPage />,
   },
   {
@@ -32,12 +26,9 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: (
-      <ProtectedRoute>
-        <Layout />
-      </ProtectedRoute>
-    ),
+    element: <Layout />,
     children: [
+      { index: true, element: <Navigate to="beranda" replace /> },
       { path: "beranda", element: <HomePage /> },
       { path: "riwayat", element: <HistoryPage /> },
       { path: "riwayat/:id", element: <HistoryDetailPage /> },

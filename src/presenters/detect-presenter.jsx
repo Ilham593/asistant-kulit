@@ -50,25 +50,34 @@ export default class DetectPresenter {
     const confidence = maxVal;
 
     // filter treatment by Tags === disease
-    const recs = treatments
-      .filter(t => t.Tags.toLowerCase() === disease.toLowerCase())
-      .map(t => {
-        // gambar produk: coba beberapa ekstensi
-        const exts = ['png','jpg','webp'];
-        let img = '';
-        for (let e of exts) {
-          const path = `/skincare_product/gambar_produk/${t.Id}.${e}`;
-          img = path; break;
-        }
-        return {
-          id: t.Id,
-          brand: t.Brand,
-          name: t["Product Name"],
-          price: t.Price,
-          link: t.Links,
-          image: img
-        };
-      });
+    const recs = await Promise.all(
+      treatments
+        .filter(t => t.Tags.toLowerCase() === disease.toLowerCase())
+        .map(async (t) => {
+          const exts = ['png','jpg','webp'];
+          let img = '';
+          for (let e of exts) {
+            const url = `/skincare_product/gambar_produk/${t.Id}.${e}`;
+            try {
+              const res = await fetch(url, { method: 'HEAD' });
+              if (res.ok) {
+                img = url;
+                break;
+              }
+            } catch {
+              // ignore fetch errors
+            }
+          }
+          return {
+            id: t.Id,
+            brand: t.Brand,
+            name: t["Product Name"],
+            price: t.Price,
+            link: t.Links,
+            image: img
+          };
+        })
+    )
 
     return { disease, confidence, recommendations: recs };
   }
