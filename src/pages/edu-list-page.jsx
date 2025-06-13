@@ -48,6 +48,7 @@ Keriput terjadi karena penuaan, UV, ekspresi wajah, atau merokok. Pencegahan: su
   },
 ];
 
+
 export default function ArtikelPage() {
   const [articles] = useState(dataArtikel);
   const [searchQuery, setSearchQuery] = useState("");
@@ -60,113 +61,130 @@ export default function ArtikelPage() {
     setFilteredArticles(articles);
   }, [articles]);
 
-  useEffect(() => { 
-    if (!searchQuery.trim()) { 
-      setSuggestions([]); 
-    } else { 
-      const matches = articles 
-        .filter(a => 
-          a.title.toLowerCase().includes(searchQuery.toLowerCase()) 
-        ) 
-        .slice(0, 5); 
-      setSuggestions(matches); 
-    } 
-  }, [searchQuery, articles]); 
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setSuggestions([]);
+    } else {
+      const matches = articles
+        .filter((a) =>
+          a.title.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        .slice(0, 5);
+      setSuggestions(matches);
+    }
+  }, [searchQuery, articles]);
 
-  const applyFilter = (query) => { 
-    const q = query || searchQuery; 
-    setFilteredArticles( 
-      articles.filter(a => 
-        a.title.toLowerCase().includes(q.toLowerCase()) 
-      ) 
-    ); 
-    setSuggestions([]); 
-  }; 
+  const applyFilter = (query) => {
+    const q = query || searchQuery;
+    setFilteredArticles(
+      articles.filter((a) =>
+        a.title.toLowerCase().includes(q.toLowerCase())
+      )
+    );
+    setSuggestions([]);
+  };
 
-  const pickSuggestion = (title) => { 
-    setSearchQuery(title); 
-    applyFilter(title); 
-    inputRef.current.focus(); 
-  }; 
+  const pickSuggestion = (title) => {
+    setSearchQuery(title);
+    applyFilter(title);
+    inputRef.current.focus();
+  };
 
-  useEffect(() => { 
-    const onClick = e => { 
-      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) { 
-        setSuggestions([]); 
-      } 
-    }; 
-    document.addEventListener("mousedown", onClick); 
-    return () => document.removeEventListener("mousedown", onClick); 
+  useEffect(() => {
+    const onClick = (e) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+        setSuggestions([]);
+      }
+    };
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#fefaf6] px-4 py-10">
-      <div className="max-w-4xl mx-auto space-y-8">
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-amber-100 px-4 py-10 animate-fade-in">
+      <div className="max-w-4xl mx-auto space-y-10">
         <div className="text-center">
-          <h1 className="text-3xl font-bold mb-2">Artikel Edukasi Kulit</h1>
-          <p className="text-gray-600">
-            Informasi perawatan kulit berdasarkan hasil deteksi Anda.
+          <h1 className="text-3xl font-extrabold text-gray-800 mb-2">📚 Artikel Edukasi Kulit</h1>
+          <p className="text-gray-600 text-sm">
+            Temukan informasi berdasarkan hasil deteksi kulit Anda.
           </p>
         </div>
 
-        <div ref={wrapperRef} className="relative max-w-md mx-auto"> 
-          <input 
-            ref={inputRef} 
-            type="search" 
-            placeholder="Cari Artikel" 
-            value={searchQuery} 
-            onChange={e => setSearchQuery(e.target.value)} 
-            onKeyDown={e => e.key === "Enter" && applyFilter()} 
-            className="w-full px-4 py-2 border border-gray-400 rounded-lg bg-white shadow focus:ring focus:outline-none pr-10 transition" 
-          /> 
-          <FiSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" /> 
-          {suggestions.length > 0 && ( 
-            <ul className="absolute left-0 top-full mt-1 w-full bg-white border rounded shadow max-h-48 overflow-y-auto z-10"> 
-              {suggestions.map(s => ( 
-                <li 
-                  key={s.id} 
-                  onMouseDown={() => pickSuggestion(s.title)} 
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer" 
-                > 
-                  {s.title} 
-                </li> 
-              ))} 
-            </ul> 
-          )} 
+        <div ref={wrapperRef} className="relative max-w-md mx-auto">
+          <input
+            ref={inputRef}
+            type="search"
+            placeholder="🔍 Cari artikel kulit..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && applyFilter()}
+            className="w-full px-4 py-2 border border-gray-400 rounded-lg bg-white shadow focus:ring focus:outline-none pr-10 transition-all duration-200"
+          />
+          <FiSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          {suggestions.length > 0 && (
+            <ul className="absolute left-0 top-full mt-1 w-full bg-white border rounded-lg shadow max-h-48 overflow-y-auto z-10">
+              {suggestions.map((s) => (
+                <li
+                  key={s.id}
+                  onMouseDown={() => pickSuggestion(s.title)}
+                  className="px-4 py-2 hover:bg-amber-100 cursor-pointer transition"
+                >
+                  {s.title}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
-        {filteredArticles.map((artikel) => (
-          <div
-            key={artikel.id}
-            className="bg-white shadow p-6 rounded-xl space-y-3"
-          >
-            <h2 className="text-xl font-semibold text-accent">
-              {artikel.title}
-            </h2>
-            <p className="text-gray-800 whitespace-pre-line">
-              {artikel.content}
-            </p>
-            <a
-              href={artikel.sumber}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block text-blue-600 hover:underline text-sm"
+        <div className="space-y-6">
+          {filteredArticles.map((artikel, i) => (
+            <div
+              key={artikel.id}
+              className="bg-white shadow-md hover:shadow-lg transition-all p-6 rounded-xl animate-slide-up"
+              style={{ animationDelay: `${i * 0.05}s` }}
             >
-              Baca sumber resmi →
-            </a>
-          </div>
-        ))}
+              <h2 className="text-xl font-bold text-amber-600 mb-2">{artikel.title}</h2>
+              <p className="text-gray-800 whitespace-pre-line text-sm leading-relaxed">
+                {artikel.content}
+              </p>
+              <a
+                href={artikel.sumber}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block text-blue-600 mt-2 hover:underline text-sm"
+              >
+                Baca sumber resmi →
+              </a>
+            </div>
+          ))}
+        </div>
 
         <div className="text-center text-sm text-gray-500 mt-10">
           <p>
-            Artikel ini hanya bersifat edukatif dan tidak menggantikan
-            konsultasi dengan dokter kulit.
+            Artikel ini hanya bersifat edukatif dan tidak menggantikan konsultasi dengan dokter kulit.
           </p>
-          <Link to="/" className="text-blue-600 underline mt-4 block">
+          <Link to="/" className="text-blue-600 underline mt-4 block hover:text-blue-700 transition">
             ← Kembali ke Beranda
           </Link>
         </div>
       </div>
+
+      <style>{`
+        .animate-fade-in {
+          animation: fadeIn 0.6s ease-in-out;
+        }
+        .animate-slide-up {
+          animation: slideUp 0.4s ease-out both;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 }

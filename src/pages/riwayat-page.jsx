@@ -4,20 +4,21 @@ import axios from "axios";
 
 export default function RiwayatPage() {
   const user = useSelector((state) => state.auth.user);
-
   const [riwayatList, setRiwayatList] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchRiwayat = async () => {
       if (!user || !user.id) {
-        console.warn(" User belum login atau ID tidak ditemukan.");
+        console.warn("User belum login atau ID tidak ditemukan.");
         setLoading(false);
         return;
       }
 
       try {
-        const res = await axios.get(`https://asistant-kulit-production-7ab2.up.railway.app/api/riwayat/${user.id}`);
+        const res = await axios.get(
+          `https://asistant-kulit-production-7ab2.up.railway.app/api/riwayat/${user.id}`
+        );
         const data = res.data;
 
         if (data.success) {
@@ -26,7 +27,7 @@ export default function RiwayatPage() {
           console.warn("Gagal mengambil riwayat:", data.message);
         }
       } catch (err) {
-        console.error(" Error fetch riwayat:", err.message);
+        console.error("Error fetch riwayat:", err.message);
       } finally {
         setLoading(false);
       }
@@ -39,46 +40,79 @@ export default function RiwayatPage() {
     return (
       <div className="min-h-screen flex items-center justify-center px-4 text-center">
         <p className="text-gray-600 text-lg">
-          Anda belum login. Silakan login terlebih dahulu untuk melihat riwayat deteksi Anda.
+          ⚠️ Anda belum login. Silakan login terlebih dahulu untuk melihat riwayat deteksi Anda.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#fefaf6] py-8 px-4">
-      <h1 className="text-2xl font-bold text-center mb-6">Riwayat Deteksi Anda</h1>
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-amber-100 py-10 px-4 animate-fade-in">
+      <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
+        📝 Riwayat Deteksi Anda
+      </h1>
 
       {loading ? (
-        <p className="text-center text-gray-500">🔄 Memuat riwayat...</p>
+        <p className="text-center text-gray-500 animate-pulse">🔄 Memuat riwayat...</p>
       ) : riwayatList.length === 0 ? (
         <p className="text-center text-gray-500">📭 Belum ada riwayat deteksi.</p>
       ) : (
-        <div className="max-w-4xl mx-auto space-y-6">
-          {riwayatList.map((item) => (
-            <div key={item._id} className="bg-white p-4 rounded-lg shadow space-y-3">
-              <p className="text-sm text-gray-500">
-                🕒 Tanggal: {new Date(item.tanggal).toLocaleString("id-ID")}
-              </p>
-              <p className="font-semibold text-red-600">
-                🧬 Penyakit: {item.penyakit} ({(item.confidence * 100).toFixed(2)}%)
-              </p>
+        <div className="max-w-5xl mx-auto space-y-6">
+          {riwayatList.map((item, index) => (
+            <div
+              key={item._id}
+              className="bg-white rounded-xl shadow hover:shadow-md transition p-6 animate-slide-up"
+              style={{ animationDelay: `${index * 0.05}s` }}
+            >
+              <div className="text-sm text-gray-500 mb-2">
+                🕒 <span className="font-medium">Tanggal:</span>{" "}
+                {new Date(item.tanggal).toLocaleString("id-ID")}
+              </div>
+
+              <div className="mb-3">
+                <h2 className="text-lg font-bold text-red-600 flex items-center gap-2">
+                  🧬 {item.penyakit} <span>({(item.confidence * 100).toFixed(2)}%)</span>
+                </h2>
+              </div>
 
               <div>
-                <h3 className="font-medium mb-2">🛒 Rekomendasi Produk:</h3>
-                <ul className="list-disc pl-5 space-y-1">
+                <h3 className="font-semibold mb-2 text-gray-800">🛒 Rekomendasi Produk</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {item.rekomendasi.map((produk, idx) => (
-                    <li key={idx}>
-                      <span className="font-semibold">{produk.nama}</span> — {produk.produk} (
-                      Rp{produk.harga.toLocaleString("id-ID")})
-                    </li>
+                    <div
+                      key={idx}
+                      className="p-3 border rounded-lg bg-gray-50 shadow-sm hover:shadow transition"
+                    >
+                      <p className="font-medium">{produk.nama}</p>
+                      <p className="text-sm text-gray-700 mb-1">{produk.produk}</p>
+                      <p className="text-green-600 font-semibold text-sm">
+                        Rp{produk.harga.toLocaleString("id-ID")}
+                      </p>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
             </div>
           ))}
         </div>
       )}
+
+      <style>{`
+        .animate-fade-in {
+          animation: fadeIn 0.6s ease-in-out;
+        }
+        .animate-slide-up {
+          animation: slideUp 0.5s ease-out both;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 }

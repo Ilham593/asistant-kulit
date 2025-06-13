@@ -32,40 +32,45 @@ export default function Navbar() {
   };
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-20">
+    <header className="bg-white shadow-md sticky top-0 z-50 transition-all">
       <div className="container mx-auto flex items-center justify-between p-4 lg:px-16">
         <Link
           to="/"
-          className="text-2xl font-bold flex items-center gap-1"
-          tabIndex={0}
+          className="text-2xl font-extrabold flex items-center gap-1 text-black"
         >
-          <span className="text-black">assistant</span>
-          <span className="text-accent">Skin</span>
+          assistant<span className="text-amber-500">Skin</span>
         </Link>
 
-        <nav className="hidden lg:flex space-x-6">
+        <nav className="hidden lg:flex items-center space-x-6 text-gray-700 font-medium">
           {location.pathname !== "/beranda" &&
             navLinks.map((link) => (
-              <Link key={link.to} to={link.to} className="hover:text-accent">
+              <Link
+                key={link.to}
+                to={link.to}
+                className="hover:text-amber-600 transition-colors duration-200"
+              >
                 {link.label}
               </Link>
             ))}
           {token ? (
             <button
               onClick={handleLogoutClick}
-              className="hover:text-accent focus:outline-none"
+              className="hover:text-red-600 transition"
             >
               Logout
             </button>
           ) : (
-            <Link to="/login" className="hover:text-accent">
+            <Link
+              to="/login"
+              className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-1.5 rounded-md transition"
+            >
               Login
             </Link>
           )}
         </nav>
 
         <button
-          className="lg:hidden p-2 focus:outline-none"
+          className="lg:hidden p-2 focus:outline-none hover:text-amber-500"
           aria-label="Open menu"
           onClick={() => setOpen(true)}
         >
@@ -75,26 +80,25 @@ export default function Navbar() {
 
       {open && <Sidebar onClose={() => setOpen(false)} navLinks={navLinks} />}
 
-      {/* Modal Konfirmasi Logout */}
       {showLogoutConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
-            <h2 className="text-lg font-semibold mb-2 text-gray-800">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-xl shadow-xl p-6 max-w-sm w-full animate-slide-up">
+            <h2 className="text-lg font-bold text-gray-800 mb-2">
               Konfirmasi Logout
             </h2>
-            <p className="mb-4 text-gray-600">
-              Apakah Anda yakin ingin logout?
+            <p className="text-sm text-gray-600 mb-4">
+              Anda yakin ingin keluar dari akun?
             </p>
-            <div className="flex justify-end gap-2">
+            <div className="flex justify-end gap-3">
               <button
                 onClick={() => setShowLogoutConfirm(false)}
-                className="px-4 py-2 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
+                className="px-4 py-2 text-gray-700 bg-gray-200 hover:bg-gray-300 rounded transition"
               >
                 Batal
               </button>
               <button
                 onClick={confirmLogout}
-                className="px-4 py-2 rounded bg-red-500 text-white hover:bg-red-600 transition"
+                className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded transition"
               >
                 Logout
               </button>
@@ -102,6 +106,23 @@ export default function Navbar() {
           </div>
         </div>
       )}
+
+      <style>{`
+        .animate-fade-in {
+          animation: fadeIn 0.3s ease-in-out;
+        }
+        .animate-slide-up {
+          animation: slideUp 0.3s ease-out forwards;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0 }
+          to { opacity: 1 }
+        }
+        @keyframes slideUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </header>
   );
 }
