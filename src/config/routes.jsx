@@ -31,59 +31,31 @@ const router = createBrowserRouter([
       { index: true, element: <Navigate to="beranda" replace /> },
       {
         path: "beranda",
-        element: (
-          <PrivateRoute>
-            <HomePage />
-          </PrivateRoute>
-        ),
+        element: <HomePage />, // Hapus <PrivateRoute>
       },
       {
         path: "riwayat",
-        element: (
-          <PrivateRoute>
-            <RiwayatPage />
-          </PrivateRoute>
-        ),
+        element: <RiwayatPage />, // Hapus <PrivateRoute>
       },
       // {
       //   path: "riwayat/:id",
-      //   element: (
-      //     <PrivateRoute>
-      //       <HistoryDetailPage />
-      //     </PrivateRoute>
-      //   ),
+      //   element: <HistoryDetailPage />,
       // },
       {
         path: "deteksi",
-        element: (
-          <PrivateRoute>
-            <DetectPage />
-          </PrivateRoute>
-        ),
+        element: <DetectPage />, // Hapus <PrivateRoute>
       },
       {
         path: "edukasi",
-        element: (
-          <PrivateRoute>
-            <ArtikelPage />
-          </PrivateRoute>
-        ),
+        element: <ArtikelPage />, // Hapus <PrivateRoute>
       },
       {
         path: "edukasi/:id",
-        element: (
-          <PrivateRoute>
-            <EduDetailPage />
-          </PrivateRoute>
-        ),
+        element: <EduDetailPage />, // Hapus <PrivateRoute>
       },
       {
         path: "feedback",
-        element: (
-          <PrivateRoute>
-            <FeedbackPage />
-          </PrivateRoute>
-        ),
+        element: <FeedbackPage />, // Hapus <PrivateRoute>
       },
     ],
   },

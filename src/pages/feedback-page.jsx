@@ -60,7 +60,16 @@ export default function FeedbackPage() {
         </div>
       </form>
       ) : (
-        <p className="text-center text-gray-600">Silakan login untuk memberi komentar.</p>
+        <div className="flex justify-center mb-8">
+          <div className="bg-white border border-yellow-300 rounded-lg px-6 py-4 shadow text-center flex items-center gap-2">
+            <svg className="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z" />
+            </svg>
+            <span className="text-gray-700 font-medium mb">
+              Silakan <a href="/login" className="text-accent hover:text-accent/80">Login</a> untuk memberi komentar.
+            </span>
+          </div>
+        </div>
       )}
 
       <div className="max-w-2xl mx-auto space-y-4">
