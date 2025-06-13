@@ -1,12 +1,17 @@
 import { FiX } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import LogoutConfirmModal from "./logout-confirm-modal";
 
 export default function Sidebar({ onClose, navLinks }) {
   const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
-  const handleLogout = () => {
+  const handleLogoutClick = () => setShowLogoutConfirm(true);
+  const confirmLogout = () => {
+    setShowLogoutConfirm(false);
     onClose();
     navigate('/logout');
   };
@@ -47,7 +52,7 @@ export default function Sidebar({ onClose, navLinks }) {
         {/* Tombol Login/Logout */}
         {token ? (
           <button
-            onClick={handleLogout}
+            onClick={handleLogoutClick}
             className="w-full py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold transition"
           >
             Logout
@@ -62,6 +67,12 @@ export default function Sidebar({ onClose, navLinks }) {
           </Link>
         )}
       </div>
+
+      <LogoutConfirmModal
+        open={showLogoutConfirm}
+        onCancel={() => setShowLogoutConfirm(false)}
+        onConfirm={confirmLogout}
+      />
 
       <style>{`
         .animate-fade-in {

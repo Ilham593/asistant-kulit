@@ -3,6 +3,7 @@ import Sidebar from "./sidebar";
 import { FiMenu } from "react-icons/fi";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import LogoutConfirmModal from "./logout-confirm-modal";
 
 const navLinks = [
   { label: "Beranda", to: "/beranda" },
@@ -80,32 +81,11 @@ export default function Navbar() {
 
       {open && <Sidebar onClose={() => setOpen(false)} navLinks={navLinks} />}
 
-      {showLogoutConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-xl shadow-xl p-6 max-w-sm w-full animate-slide-up">
-            <h2 className="text-lg font-bold text-gray-800 mb-2">
-              Konfirmasi Logout
-            </h2>
-            <p className="text-sm text-gray-600 mb-4">
-              Anda yakin ingin keluar dari akun?
-            </p>
-            <div className="flex justify-end gap-3">
-              <button
-                onClick={() => setShowLogoutConfirm(false)}
-                className="px-4 py-2 text-gray-700 bg-gray-200 hover:bg-gray-300 rounded transition"
-              >
-                Batal
-              </button>
-              <button
-                onClick={confirmLogout}
-                className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded transition"
-              >
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <LogoutConfirmModal
+        open={showLogoutConfirm}
+        onCancel={() => setShowLogoutConfirm(false)}
+        onConfirm={confirmLogout}
+      />
 
       <style>{`
         .animate-fade-in {
