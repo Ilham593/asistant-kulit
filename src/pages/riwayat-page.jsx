@@ -39,7 +39,7 @@ export default function RiwayatPage() {
 
   if (!user || !user.id) {
     return (
-      <div className="min-h-screen flex items-start justify-center bg-gradient-to-br from-yellow-50 to-amber-100 px-4 pt-28">
+      <div className="min-h-screen flex items-start justify-center bg-gradient-to-br from-yellow-50 to-amber-100 px-4 pt-10 sm:pt-28">
         <div className="bg-white rounded-xl shadow-lg p-8 max-w-md w-full text-center space-y-6 border">
           <div className="flex flex-col items-center gap-2">
             <FiClock size={36} className="text-amber-500" />
