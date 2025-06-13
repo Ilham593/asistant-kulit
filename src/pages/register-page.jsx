@@ -31,12 +31,7 @@ const RegisterPage = () => {
       navigate("/login"); 
     }
   };
-
-  useEffect(() => {
-    if (user) {
-      navigate("/");
-    }
-  }, [user, navigate]);
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#fefaf6] px-4">
