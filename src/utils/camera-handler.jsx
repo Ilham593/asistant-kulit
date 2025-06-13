@@ -16,13 +16,12 @@ export function CameraHandler(onCapture) {
       mediaStream.current = null;
     }
     setStreamActive(false);
-    setSelectedDevice(null);
   };
 
-  const openCamera = async () => {
+  const openCamera = async (deviceId = selectedDevice) => {
     try {
-      const constraints = selectedDevice
-        ? { video: { deviceId: { exact: selectedDevice } } }
+      const constraints = deviceId
+        ? { video: { deviceId: { exact: deviceId } } }
         : { video: true };
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
       mediaStream.current = stream;
@@ -36,20 +35,40 @@ export function CameraHandler(onCapture) {
     }
   };
 
+  const updateDevices = async () => {
+    const list = await navigator.mediaDevices.enumerateDevices();
+    const videoDevices = list.filter(d => d.kind === 'videoinput');
+    setDevices(videoDevices);
+    if (videoDevices.length > 0 && !selectedDevice) {
+      setSelectedDevice(videoDevices[0].deviceId);
+    }
+    if (videoDevices.length === 0) {
+      setError('Tidak ada kamera yang tersedia');
+    }
+  };
+
   useEffect(() => {
-    navigator.mediaDevices.enumerateDevices().then((list) => {
-      const videoDevices = list.filter(d => d.kind === 'videoinput');
-      setDevices(videoDevices);
-      if (videoDevices.length > 0) {
-        setSelectedDevice(videoDevices[0].deviceId);
-      } else {
-        setError('Tidak ada kamera yang tersedia');
-      }
-    });
+    updateDevices();
   }, []);
 
+  useEffect(() => {
+    if (streamActive) {
+      updateDevices();
+    }
+  }, [streamActive]);
+
+  useEffect(() => {
+    if (streamActive && selectedDevice) {
+      openCamera(selectedDevice);
+    }
+  }, [selectedDevice]);
+
   const toggleCamera = () => {
-    streamActive ? stopCamera() : openCamera();
+    if (streamActive) {
+      stopCamera();
+    } else {
+      openCamera(selectedDevice);
+    }
   };
 
   const capturePhoto = () => {
@@ -78,5 +97,5 @@ export function CameraHandler(onCapture) {
     };
   }, []);
 
-  return { videoRef, canvasRef, streamActive, error, toggleCamera, capturePhoto, devices, selectedDevice, setSelectedDevice  };
+  return { videoRef, canvasRef, streamActive, error, toggleCamera, capturePhoto, devices, selectedDevice, setSelectedDevice };
 }

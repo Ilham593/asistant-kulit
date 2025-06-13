@@ -114,9 +114,9 @@ export default function DetectPage() {
               onChange={(e) => setSelectedDevice(e.target.value)}
               className="px-4 py-2 border rounded-lg w-full sm:w-auto focus:outline-none focus:ring focus:ring-amber-400"
             >
-              {devices.map((device) => (
+              {devices.map((device, idx) => (
                 <option key={device.deviceId} value={device.deviceId}>
-                  {device.label || `Camera ${device.deviceId}`}
+                  {device.label || `Kamera ${idx + 1}`}
                 </option>
               ))}
             </select>
