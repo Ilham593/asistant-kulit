@@ -6,8 +6,8 @@ import swaggerDocs from "./swagger.js";
 
 // import router
 import authrouter from "./routes/auth.js";
-import predictrouter from "./routes/predict.js";
-import riwayatrouter from "./routes/riwayat.js";
+import riwayatRouter from "./routes/riwayat.js";
+import feedbackRouter from "./routes/feedback.js";
 // import artikelrouter from "./routes/artikel.js";
 // import statistikrouter from "./routes/statistik.js";
 
@@ -23,8 +23,8 @@ app.use(express.json());
 
 // routes utama
 app.use("/api/auth", authrouter);
-app.use("/api", predictrouter);
-app.use("/api", riwayatrouter);
+app.use("/api/riwayat", riwayatRouter);
+app.use("/api/feedback", feedbackRouter);
 // app.use("/api", artikelrouter);
 // app.use("/api", statistikrouter);
 

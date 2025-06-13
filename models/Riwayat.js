@@ -1,20 +1,25 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const riwayatSchema = mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  penyakit: String,
-  akurasi: Number,
-  saran: String,
-  tanggal: {
-    type: Date,
-    default: Date.now,
-  },
-  image: String,
+const rekomendasiSchema = new mongoose.Schema({
+  nama: String,
+  produk: String,
+  harga: Number,
 });
 
-const Riwayat = mongoose.model("Riwayat", riwayatSchema);
+const riwayatSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  penyakit: String,
+  confidence: Number,
+  rekomendasi: [rekomendasiSchema],
+  tanggal: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+const Riwayat = mongoose.model('Riwayat', riwayatSchema);
 export default Riwayat;
