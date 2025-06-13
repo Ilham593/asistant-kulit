@@ -43,20 +43,22 @@ export default function FeedbackPage() {
 
       {user ? (
         <form onSubmit={handleSubmit} className="mb-6 max-w-xl mx-auto">
-          <textarea
-            rows={4}
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            placeholder="Tulis komentar Anda di sini..."
-            className="w-full border rounded-lg p-3 focus:outline-none focus:ring"
-          />
+        <textarea
+          rows={4}
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          placeholder="Tulis komentar Anda di sini..."
+          className="w-full min-h-[120px] border border-gray-400 rounded-lg p-3 resize-none focus:outline-none focus:ring focus:border-accent"
+        />
+        <div className="flex justify-end">
           <button
             type="submit"
             className="mt-2 bg-amber-400 text-white px-4 py-2 rounded hover:bg-amber-500"
           >
             Kirim Komentar
           </button>
-        </form>
+        </div>
+      </form>
       ) : (
         <p className="text-center text-gray-600">Silakan login untuk memberi komentar.</p>
       )}

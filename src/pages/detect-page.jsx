@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import DetectPresenter from "../presenters/detect-presenter";
 import { CameraHandler } from "../utils/camera-handler";

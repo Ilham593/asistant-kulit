@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { FiSearch } from "react-icons/fi";
 
 const dataArtikel = [
   {
@@ -48,6 +49,56 @@ Keriput terjadi karena penuaan, UV, ekspresi wajah, atau merokok. Pencegahan: su
 ];
 
 export default function ArtikelPage() {
+  const [articles] = useState(dataArtikel);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredArticles, setFilteredArticles] = useState(dataArtikel);
+  const [suggestions, setSuggestions] = useState([]);
+  const wrapperRef = useRef(null);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    setFilteredArticles(articles);
+  }, [articles]);
+
+  useEffect(() => { 
+    if (!searchQuery.trim()) { 
+      setSuggestions([]); 
+    } else { 
+      const matches = articles 
+        .filter(a => 
+          a.title.toLowerCase().includes(searchQuery.toLowerCase()) 
+        ) 
+        .slice(0, 5); 
+      setSuggestions(matches); 
+    } 
+  }, [searchQuery, articles]); 
+
+  const applyFilter = (query) => { 
+    const q = query || searchQuery; 
+    setFilteredArticles( 
+      articles.filter(a => 
+        a.title.toLowerCase().includes(q.toLowerCase()) 
+      ) 
+    ); 
+    setSuggestions([]); 
+  }; 
+
+  const pickSuggestion = (title) => { 
+    setSearchQuery(title); 
+    applyFilter(title); 
+    inputRef.current.focus(); 
+  }; 
+
+  useEffect(() => { 
+    const onClick = e => { 
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) { 
+        setSuggestions([]); 
+      } 
+    }; 
+    document.addEventListener("mousedown", onClick); 
+    return () => document.removeEventListener("mousedown", onClick); 
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#fefaf6] px-4 py-10">
       <div className="max-w-4xl mx-auto space-y-8">
@@ -58,7 +109,33 @@ export default function ArtikelPage() {
           </p>
         </div>
 
-        {dataArtikel.map((artikel) => (
+        <div ref={wrapperRef} className="relative max-w-md mx-auto"> 
+          <input 
+            ref={inputRef} 
+            type="search" 
+            placeholder="Cari Artikel" 
+            value={searchQuery} 
+            onChange={e => setSearchQuery(e.target.value)} 
+            onKeyDown={e => e.key === "Enter" && applyFilter()} 
+            className="w-full px-4 py-2 border border-gray-400 rounded-lg bg-white shadow focus:ring focus:outline-none pr-10 transition" 
+          /> 
+          <FiSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" /> 
+          {suggestions.length > 0 && ( 
+            <ul className="absolute left-0 top-full mt-1 w-full bg-white border rounded shadow max-h-48 overflow-y-auto z-10"> 
+              {suggestions.map(s => ( 
+                <li 
+                  key={s.id} 
+                  onMouseDown={() => pickSuggestion(s.title)} 
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer" 
+                > 
+                  {s.title} 
+                </li> 
+              ))} 
+            </ul> 
+          )} 
+        </div>
+
+        {filteredArticles.map((artikel) => (
           <div
             key={artikel.id}
             className="bg-white shadow p-6 rounded-xl space-y-3"
