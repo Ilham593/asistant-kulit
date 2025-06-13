@@ -76,26 +76,32 @@ export default function DetectPage() {
           </ul>
         </div>
 
-        <div className="relative h-[500px] border-2 border-dashed border-amber-400 rounded-xl overflow-hidden flex items-center justify-center bg-white">
+        <div className="relative h-64 sm:h-[500px] border-2 border-dashed border-amber-400 rounded-xl overflow-hidden flex items-center justify-center bg-white transition-all duration-300">
           {error && (
-            <div className="absolute top-2 left-2 p-3 bg-red-100 text-red-700 rounded">
+            <div className="absolute top-2 left-2 right-2 p-3 bg-red-100 text-red-700 rounded shadow text-sm z-10">
               {error}
             </div>
           )}
           <video
             ref={videoRef}
-            className={`w-full h-full object-contain rounded-lg ${streamActive ? '' : 'hidden'}`}
+            className={`w-full h-full object-contain rounded-lg ${streamActive ? '' : 'hidden'} transition-all duration-300`}
             autoPlay muted playsInline
           />
           {!streamActive && preview && (
             <img
               src={preview}
               alt="Preview"
-              className="w-full h-full object-contain rounded-lg"
+              className="w-full h-full object-contain rounded-lg transition-all duration-300"
             />
           )}
           {!streamActive && !preview && (
-            <p className="text-gray-400">Belum ada foto</p>
+            <div className="flex flex-col items-center justify-center w-full h-full text-gray-400 px-4 text-center">
+              <FiCamera size={48} className="mb-2" />
+              <span className="text-base md:text-lg font-medium">Belum ada foto</span>
+              <span className="text-xs md:text-sm mt-1 text-gray-300">
+                Silakan ambil atau upload foto untuk mulai deteksi
+              </span>
+            </div>
           )}
           <canvas ref={canvasRef} className="hidden" />
         </div>
@@ -164,25 +170,33 @@ export default function DetectPage() {
           </div>
 
           {result.recommendations?.length > 0 && (
-            <div className="p-4 border rounded-lg">
-              <h3 className="font-semibold mb-4">Rekomendasi Produk</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="p-4 border rounded-xl bg-[#fefaf6] mt-6">
+              <h3 className="font-semibold mb-5 text-gray-800">Rekomendasi Produk</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {result.recommendations.map((item, index) => (
-                  <div key={index} className="flex gap-3 border rounded-lg p-3 shadow-sm hover:shadow-md transition">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-24 h-24 object-cover rounded"
-                    />
-                    <div className="flex flex-col justify-between">
-                      <p className="font-medium">{item.brand}</p>
-                      <p className="text-gray-700 text-sm">{item.name}</p>
-                      <p className="text-green-600 text-sm font-semibold">{item.price}</p>
+                  <div
+                    key={index}
+                    className="flex flex-col sm:flex-row bg-white border-l-4 border-accent rounded-xl shadow hover:shadow-lg transition-all duration-200 overflow-hidden"
+                  >
+                    <div className="flex-shrink-0 flex items-center justify-center bg-gray-50 sm:bg-transparent">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-full sm:w-24 h-48 sm:h-24 object-cover object-center rounded-t-xl sm:rounded-t-none sm:rounded-l-xl transition"
+                        style={{ background: "#f3f4f6" }}
+                      />
+                    </div>
+                    <div className="p-4 flex-1 flex flex-col justify-between">
+                      <div>
+                        <p className="font-medium text-amber-600 mb-1">{item.brand}</p>
+                        <p className="text-gray-700 text-sm font-semibold mb-2">{item.name}</p>
+                        <p className="text-green-600 text-sm font-bold mb-2">{item.price}</p>
+                      </div>
                       <a
                         href={item.link}
                         target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-amber-600 text-sm hover:underline"
+                        rel="noopener"
+                        className="mt-2 inline-block text-amber-600 text-sm font-medium hover:underline"
                       >
                         Lihat Produk →
                       </a>

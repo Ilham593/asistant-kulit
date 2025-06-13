@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { FiClock } from "react-icons/fi";
 
 export default function RiwayatPage() {
   const user = useSelector((state) => state.auth.user);
@@ -38,10 +39,36 @@ export default function RiwayatPage() {
 
   if (!user || !user.id) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 text-center">
-        <p className="text-gray-600 text-lg">
-          ⚠️ Anda belum login. Silakan login terlebih dahulu untuk melihat riwayat deteksi Anda.
-        </p>
+      <div className="min-h-screen flex items-start justify-center bg-gradient-to-br from-yellow-50 to-amber-100 px-4 pt-28">
+        <div className="bg-white rounded-xl shadow-lg p-8 max-w-md w-full text-center space-y-6 border">
+          <div className="flex flex-col items-center gap-2">
+            <FiClock size={36} className="text-amber-500" />
+            <h2 className="text-xl font-bold text-gray-800">Riwayat Deteksi</h2>
+          </div>
+          <p className="text-gray-700 text-lg">
+            ⚠️ Anda belum login.<br />Silakan login untuk melihat riwayat deteksi Anda.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mt-4">
+            <button
+              onClick={() => window.location.href = '/beranda'}
+              className="w-full sm:w-auto px-4 py-2 bg-white text-gray-700 border rounded hover:bg-gray-100 transition"
+            >
+              Beranda
+            </button>
+            <button
+              onClick={() => window.location.href = '/login'}
+              className="w-full sm:w-auto px-4 py-2 bg-amber-500 text-white rounded hover:bg-amber-600 transition"
+            >
+              Login
+            </button>
+            <button
+              onClick={() => window.location.href = '/register'}
+              className="w-full sm:w-auto px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-800 transition"
+            >
+              Register
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
