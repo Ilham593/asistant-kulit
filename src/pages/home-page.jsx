@@ -53,7 +53,7 @@ export default function HomePage() {
           <h2 className="text-2xl font-bold mb-4">
             Peta Lokasi Apotek & RS Terdekat
           </h2>
-          <div ref={mapRef} className="w-full h-96 bg-gray-200 rounded overflow-hidden"></div>
+          <div ref={mapRef} className="w-full h-96 bg-gray-200 rounded overflow-hidden z-0"></div>
         </section>
       </div>
     </div>

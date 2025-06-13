@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Sidebar from "./sidebar";
 import { FiMenu } from "react-icons/fi";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const navLinks = [
@@ -14,11 +14,22 @@ const navLinks = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const { token } = useSelector((state) => state.auth);
 
-  const mainLabel = token ? "Logout" : "Login";
-  const mainTo = token ? "/logout" : "/login";
+  const handleLogoutClick = (e) => {
+    if (token) {
+      e.preventDefault();
+      setShowLogoutConfirm(true);
+    }
+  };
+
+  const confirmLogout = () => {
+    setShowLogoutConfirm(false);
+    navigate("/logout");
+  };
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-20">
@@ -34,16 +45,23 @@ export default function Navbar() {
 
         <nav className="hidden lg:flex space-x-6">
           {location.pathname !== "/beranda" &&
-            navLinks
-              .filter((link) => link.label !== "Logout")
-              .map((link) => (
-                <Link key={link.to} to={link.to} className="hover:text-accent">
-                  {link.label}
-                </Link>
-              ))}
-          <Link to={mainTo} className="hover:text-accent">
-            {mainLabel}
-          </Link>
+            navLinks.map((link) => (
+              <Link key={link.to} to={link.to} className="hover:text-accent">
+                {link.label}
+              </Link>
+            ))}
+          {token ? (
+            <button
+              onClick={handleLogoutClick}
+              className="hover:text-accent focus:outline-none"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link to="/login" className="hover:text-accent">
+              Login
+            </Link>
+          )}
         </nav>
 
         <button
@@ -56,6 +74,34 @@ export default function Navbar() {
       </div>
 
       {open && <Sidebar onClose={() => setOpen(false)} navLinks={navLinks} />}
+
+      {/* Modal Konfirmasi Logout */}
+      {showLogoutConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
+            <h2 className="text-lg font-semibold mb-2 text-gray-800">
+              Konfirmasi Logout
+            </h2>
+            <p className="mb-4 text-gray-600">
+              Apakah Anda yakin ingin logout?
+            </p>
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setShowLogoutConfirm(false)}
+                className="px-4 py-2 rounded bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
+              >
+                Batal
+              </button>
+              <button
+                onClick={confirmLogout}
+                className="px-4 py-2 rounded bg-red-500 text-white hover:bg-red-600 transition"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
