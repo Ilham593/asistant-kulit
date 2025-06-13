@@ -110,31 +110,47 @@ export default function ArtikelPage() {
           </p>
         </div>
 
-        <div ref={wrapperRef} className="relative max-w-md mx-auto">
-          <input
-            ref={inputRef}
-            type="search"
-            placeholder="🔍 Cari artikel kulit..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && applyFilter()}
-            className="w-full px-4 py-2 border border-gray-400 rounded-lg bg-white shadow focus:ring focus:outline-none pr-10 transition-all duration-200"
-          />
-          <FiSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          {suggestions.length > 0 && (
-            <ul className="absolute left-0 top-full mt-1 w-full bg-white border rounded-lg shadow max-h-48 overflow-y-auto z-10">
-              {suggestions.map((s) => (
-                <li
-                  key={s.id}
-                  onMouseDown={() => pickSuggestion(s.title)}
-                  className="px-4 py-2 hover:bg-amber-100 cursor-pointer transition"
-                >
-                  {s.title}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+				<div ref={wrapperRef} className="relative max-w-md mx-auto">
+					<input
+						ref={inputRef}
+						type="search"
+						placeholder="🔍 Cari artikel kulit..."
+						value={searchQuery}
+						onChange={(e) => setSearchQuery(e.target.value)}
+						onKeyDown={(e) => {
+							if (e.key === "Enter") {
+								applyFilter();
+								inputRef.current.blur(); 
+							}
+						}}
+						className="w-full px-4 py-2 border border-gray-400 rounded-lg bg-white shadow focus:ring focus:outline-none pr-10 transition-all duration-200"
+					/>
+					<button
+						type="button"
+						aria-label="Cari"
+						className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-amber-600 transition"
+						onClick={() => {
+							applyFilter();
+							inputRef.current.blur(); 
+						}}
+						tabIndex={0}
+					>
+						<FiSearch />
+					</button>
+					{suggestions.length > 0 && (
+						<ul className="absolute left-0 top-full mt-1 w-full bg-white border rounded-lg shadow max-h-48 overflow-y-auto z-10">
+							{suggestions.map((s) => (
+								<li
+									key={s.id}
+									onMouseDown={() => pickSuggestion(s.title)}
+									className="px-4 py-2 hover:bg-amber-100 cursor-pointer transition"
+								>
+									{s.title}
+								</li>
+							))}
+						</ul>
+					)}
+				</div>
 
         <div className="space-y-6">
           {filteredArticles.map((artikel, i) => (
