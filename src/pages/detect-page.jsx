@@ -63,9 +63,9 @@ export default function DetectPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-amber-100 py-10 px-4 animate-fade-in">
-      <h1 className="text-3xl font-bold text-center flex justify-center items-center gap-2 mb-8">
+      <h1 className="text-2xl sm:text-3xl font-bold flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 mb-8 text-center">
         <FiCamera className="text-amber-500" size={32} />
-        Deteksi Penyakit Kulit
+        <span>Deteksi Penyakit Kulit</span>
       </h1>
 
       <section className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow space-y-4 mb-8">
