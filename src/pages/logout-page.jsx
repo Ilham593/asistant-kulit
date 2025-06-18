@@ -16,19 +16,19 @@ const LogoutPage = () => {
   }, [dispatch, navigate]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-amber-100 flex items-center justify-center px-4 animate-fade-in">
+    <div className="min-h-screen bg-blue-100 flex items-center justify-center px-4 animate-fade-in">
       <div className="bg-white rounded-3xl p-10 max-w-md w-full text-center shadow-lg animate-slide-up">
         <div className="text-5xl mb-4">👋</div>
-        <h1 className="text-2xl font-bold text-gray-800 mb-2">
+        <h1 className="text-3xl font-extrabold text-gray-800 mb-2">
           Anda telah logout.
         </h1>
-        <p className="text-gray-600 mb-6">
-          Terima kasih telah menggunakan assistantSkin.
+        <p className="text-gray-600 text-lg mb-6">
+          Terima kasih telah menggunakan <span className="text-blue-600 font-bold">assistantSkin</span>.
         </p>
 
         <Link
-          to="/"
-          className="inline-block bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded-lg font-semibold transition"
+          to="/beranda"
+          className="inline-block bg-blue-900 hover:bg-blue-800 text-white px-6 py-3 rounded-lg text-lg font-semibold shadow transition"
         >
           ⬅ Kembali ke Beranda
         </Link>

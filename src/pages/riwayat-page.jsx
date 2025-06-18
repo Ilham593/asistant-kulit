@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { FiClock } from "react-icons/fi";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export default function RiwayatPage() {
   const user = useSelector((state) => state.auth.user);
@@ -9,6 +11,12 @@ export default function RiwayatPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    AOS.init({
+      duration: 700,
+      easing: 'ease-in-out',
+      once: true,
+    });
+
     const fetchRiwayat = async () => {
       if (!user || !user.id) {
         console.warn("User belum login atau ID tidak ditemukan.");
@@ -39,31 +47,31 @@ export default function RiwayatPage() {
 
   if (!user || !user.id) {
     return (
-      <div className="min-h-screen flex items-start justify-center bg-gradient-to-br from-yellow-50 to-amber-100 px-4 pt-10 sm:pt-28">
-        <div className="bg-white rounded-xl shadow-lg p-8 max-w-md w-full text-center space-y-6 border">
+      <div className="min-h-screen flex items-center justify-center bg-blue-100 px-4 py-12" data-aos="fade-up">
+        <div className="bg-white rounded-3xl shadow-xl p-8 max-w-md w-full text-center space-y-6 border">
           <div className="flex flex-col items-center gap-2">
-            <FiClock size={36} className="text-amber-500" />
-            <h2 className="text-xl font-bold text-gray-800">Riwayat Deteksi</h2>
+            <FiClock size={40} className="text-blue-500" />
+            <h2 className="text-2xl font-extrabold text-gray-800">Riwayat Deteksi</h2>
           </div>
-          <p className="text-gray-700 text-lg">
+          <p className="text-gray-700 text-base leading-relaxed">
             ⚠️ Anda belum login.<br />Silakan login untuk melihat riwayat deteksi Anda.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 mt-4">
             <button
               onClick={() => window.location.href = '/beranda'}
-              className="w-full sm:w-auto px-4 py-2 bg-white text-gray-700 border rounded hover:bg-gray-100 transition"
+              className="w-full sm:w-auto px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition"
             >
               Beranda
             </button>
             <button
               onClick={() => window.location.href = '/login'}
-              className="w-full sm:w-auto px-4 py-2 bg-amber-500 text-white rounded hover:bg-amber-600 transition"
+              className="w-full sm:w-auto px-4 py-2 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition"
             >
               Login
             </button>
             <button
               onClick={() => window.location.href = '/register'}
-              className="w-full sm:w-auto px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-800 transition"
+              className="w-full sm:w-auto px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition"
             >
               Register
             </button>
@@ -74,9 +82,12 @@ export default function RiwayatPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-amber-100 py-10 px-4 animate-fade-in">
-      <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
-        📝 Riwayat Deteksi Anda
+    <div className="min-h-screen bg-blue-100 py-10 px-4 animate-fade-in">
+      <h1
+        className="text-4xl font-extrabold text-center text-gray-800 mb-8"
+        data-aos="fade-up"
+      >
+        Riwayat Deteksi Anda
       </h1>
 
       {loading ? (
@@ -88,30 +99,31 @@ export default function RiwayatPage() {
           {riwayatList.map((item, index) => (
             <div
               key={item._id}
-              className="bg-white rounded-xl shadow hover:shadow-md transition p-6 animate-slide-up"
-              style={{ animationDelay: `${index * 0.05}s` }}
+              className="bg-white rounded-xl shadow hover:shadow-md transition p-6"
+              data-aos="fade-up"
+              data-aos-delay={index * 100}
             >
               <div className="text-sm text-gray-500 mb-2">
                 🕒 <span className="font-medium">Tanggal:</span>{" "}
                 {new Date(item.tanggal).toLocaleString("id-ID")}
               </div>
 
-              <div className="mb-3">
-                <h2 className="text-lg font-bold text-red-600 flex items-center gap-2">
+              <div className="mb-4">
+                <h2 className="text-xl font-bold text-red-600 flex items-center gap-2">
                   🧬 {item.penyakit} <span>({(item.confidence * 100).toFixed(2)}%)</span>
                 </h2>
               </div>
 
               <div>
-                <h3 className="font-semibold mb-2 text-gray-800">🛒 Rekomendasi Produk</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <h3 className="font-semibold mb-2 text-gray-800">Rekomendasi Produk</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   {item.rekomendasi.map((produk, idx) => (
                     <div
                       key={idx}
-                      className="p-3 border rounded-lg bg-gray-50 shadow-sm hover:shadow transition"
+                      className="p-4 border rounded-lg bg-gray-50 shadow-sm hover:shadow transition space-y-1"
                     >
-                      <p className="font-medium">{produk.nama}</p>
-                      <p className="text-sm text-gray-700 mb-1">{produk.produk}</p>
+                      <p className="font-medium text-gray-800">{produk.nama}</p>
+                      <p className="text-sm text-gray-600">{produk.produk}</p>
                       <p className="text-green-600 font-semibold text-sm">
                         Rp{produk.harga.toLocaleString("id-ID")}
                       </p>
@@ -128,15 +140,8 @@ export default function RiwayatPage() {
         .animate-fade-in {
           animation: fadeIn 0.6s ease-in-out;
         }
-        .animate-slide-up {
-          animation: slideUp 0.5s ease-out both;
-        }
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideUp {
-          from { opacity: 0; transform: translateY(20px); }
           to { opacity: 1; transform: translateY(0); }
         }
       `}</style>

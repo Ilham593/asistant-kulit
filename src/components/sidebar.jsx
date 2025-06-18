@@ -1,7 +1,7 @@
-import { FiX } from 'react-icons/fi';
-import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { FiX } from "react-icons/fi";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useState } from "react";
 import LogoutConfirmModal from "./logout-confirm-modal";
 
 export default function Sidebar({ onClose, navLinks }) {
@@ -13,36 +13,42 @@ export default function Sidebar({ onClose, navLinks }) {
   const confirmLogout = () => {
     setShowLogoutConfirm(false);
     onClose();
-    navigate('/logout');
+    navigate("/logout");
   };
 
   return (
-    <aside
-      className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 animate-fade-in"
-      onClick={onClose}
-    >
+    <aside className="fixed inset-0 z-50 flex">
+      {/* Overlay */}
       <div
-        className="bg-white w-72 max-w-full h-full p-6 shadow-xl animate-slide-in"
+        className="fixed inset-0 bg-black/50  transition-opacity"
+        onClick={onClose}
+      ></div>
+
+      {/* Sidebar  */}
+      <div
+        className="relative bg-gradient-to-b from-blue-100 to-blue-50 w-72 max-w-full h-full p-6 shadow-xl animate-slide-in flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Header */}
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-lg font-bold text-gray-800">Menu</h2>
+          <h2 className="text-lg font-bold text-blue-700">Menu</h2>
           <button
             onClick={onClose}
             aria-label="Tutup menu"
-            className="text-gray-500 hover:text-red-500 transition"
+            className="text-gray-500 hover:text-red-600 transition"
           >
-            <FiX size={24} />
+            <FiX size={28} />
           </button>
         </div>
 
-        <nav className="flex flex-col gap-4 mb-8">
+        {/* Navigation */}
+        <nav className="flex flex-col gap-4 mb-8 text-gray-700 font-medium">
           {navLinks.map(({ label, to }) => (
             <Link
               key={label}
               to={to}
               onClick={onClose}
-              className="text-gray-700 hover:text-amber-600 font-medium transition"
+              className="hover:text-blue-700 hover:translate-x-1 transition-all duration-300"
             >
               {label}
             </Link>
@@ -50,24 +56,27 @@ export default function Sidebar({ onClose, navLinks }) {
         </nav>
 
         {/* Tombol Login/Logout */}
-        {token ? (
-          <button
-            onClick={handleLogoutClick}
-            className="w-full py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold transition"
-          >
-            Logout
-          </button>
-        ) : (
-          <Link
-            to="/login"
-            onClick={onClose}
-            className="w-full block py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-center font-semibold transition"
-          >
-            Login
-          </Link>
-        )}
+        <div className="mt-auto space-y-2">
+          {token ? (
+            <button
+              onClick={handleLogoutClick}
+              className="w-full py-2 bg-gradient-to-r from-red-400 to-red-500 hover:from-red-500 hover:to-red-600 text-white rounded-lg font-semibold shadow hover:scale-105 transition-all"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              onClick={onClose}
+              className="w-full block py-2 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-white rounded-lg text-center font-semibold shadow hover:scale-105 transition-all"
+            >
+              Login
+            </Link>
+          )}
+        </div>
       </div>
 
+      {/* Modal Confirm */}
       <LogoutConfirmModal
         open={showLogoutConfirm}
         onCancel={() => setShowLogoutConfirm(false)}
@@ -75,23 +84,21 @@ export default function Sidebar({ onClose, navLinks }) {
       />
 
       <style>{`
-        .animate-fade-in {
-          animation: fadeInOverlay 0.3s ease-in-out;
-        }
-        .animate-slide-in {
-          animation: slideInLeft 0.3s ease-out;
-        }
+      .animate-slide-in {
+        animation: slideInLeft 0.4s ease-out;
+      }
 
-        @keyframes fadeInOverlay {
-          from { opacity: 0; }
-          to { opacity: 1; }
+      @keyframes slideInLeft {
+        from {
+          transform: translateX(-100%);
+          opacity: 0;
         }
-
-        @keyframes slideInLeft {
-          from { transform: translateX(-100%); }
-          to { transform: translateX(0); }
+        to {
+          transform: translateX(0);
+          opacity: 1;
         }
-      `}</style>
+      }
+  `}</style>
     </aside>
   );
 }

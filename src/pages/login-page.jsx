@@ -35,9 +35,10 @@ const LoginPage = () => {
   }, [user, navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-amber-100 to-yellow-50 px-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl flex flex-col md:flex-row overflow-hidden animate-fade-in">
-        <div className="md:w-1/2 p-10 bg-gradient-to-br from-amber-400 to-yellow-300 text-white flex flex-col justify-center items-center">
+    <div className="min-h-screen flex items-center justify-center bg-blue-100 px-4">
+      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-4xl flex flex-col md:flex-row overflow-hidden animate-fade-in">
+        {/* Left */}
+        <div className="md:w-1/2 p-10 bg-gradient-to-br from-blue-500 to-blue-700 text-white flex flex-col justify-center items-center">
           <div className="text-6xl mb-4 animate-bounce">🧴</div>
           <h2 className="text-3xl font-extrabold">Welcome Back!</h2>
           <p className="text-center mt-2 text-sm opacity-90">
@@ -45,9 +46,10 @@ const LoginPage = () => {
           </p>
         </div>
 
+        {/* Right (Form) */}
         <div className="md:w-1/2 p-8 flex items-center justify-center bg-white">
           <form className="w-full max-w-sm animate-slide-in" onSubmit={handleSubmit}>
-            <h3 className="text-2xl font-bold text-gray-800 mb-6">Log in to assistantSkin</h3>
+            <h3 className="text-3xl font-extrabold text-gray-800 mb-6">Login to assistantSkin</h3>
 
             <div className="mb-4">
               <label htmlFor="username" className="block text-sm text-gray-700 mb-1">
@@ -58,7 +60,7 @@ const LoginPage = () => {
                 type="text"
                 value={formData.username}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 transition duration-300"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
                 placeholder="your_username"
               />
             </div>
@@ -72,7 +74,7 @@ const LoginPage = () => {
                 type="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 transition duration-300"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
                 placeholder="••••••••"
               />
             </div>
@@ -82,14 +84,14 @@ const LoginPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-amber-500 hover:bg-amber-600 text-white py-2 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg"
+              className="w-full bg-blue-900 hover:bg-blue-800 text-white py-3 rounded-lg text-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300"
             >
               {loading ? "Logging in..." : "Log in"}
             </button>
 
             <p className="text-sm text-gray-600 mt-4 text-center">
-              Don't have an account?{" "}
-              <Link to="/register" className="text-amber-600 font-semibold hover:underline">
+              Belum punya akun?{" "}
+              <Link to="/register" className="text-blue-600 font-semibold hover:underline">
                 Register
               </Link>
             </p>
