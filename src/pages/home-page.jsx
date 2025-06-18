@@ -47,7 +47,7 @@ export default function HomePage() {
         <section
           data-aos="fade-up"
           data-aos-delay="100"
-          className="flex flex-col md:flex-row items-center gap-12 px-4 md:px-10 py-10 bg-blue-100 rounded-3xl shadow"
+          className="flex flex-col-reverse md:flex-row items-center gap-12 px-4 md:px-10 py-10 bg-blue-100 rounded-3xl shadow"
         >
           <div className="md:w-1/2 text-center md:text-left">
             <h1 className="text-5xl font-extrabold mb-6 leading-tight">

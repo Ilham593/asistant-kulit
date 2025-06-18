@@ -92,7 +92,7 @@ export default function DetectPage() {
       >
         {/* Preview  */}
         <div className="flex flex-col items-center justify-center border border-blue-200 rounded-xl p-6 bg-blue-50">
-          <div className="relative w-64 h-80 md:w-72 md:h-96 rounded-xl border-4 border-blue-200 overflow-hidden flex items-center justify-center bg-white">
+          <div className="relative w-auto h-80 md:w-72 md:h-96 rounded-xl border-4 border-blue-200 overflow-hidden flex items-center justify-center bg-white">
             {error && (
               <div className="absolute p-3 bg-red-100 text-red-700 rounded shadow text-sm z-10">
                 {error}
